@@ -1,0 +1,18 @@
+{
+  "name": "releaser",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "patch": "node index.js patch",
+    "minor": "node index.js minor",
+    "major": "node index.js major",
+    "patch-rl": "node index.js patch --reset-lower",
+    "minor-rl": "node index.js minor --reset-lower",
+    "major-rl": "node index.js major --reset-lower"
+  },
+  "author": "Szymon Półtorak",
+  "license": "MIT"
+}
