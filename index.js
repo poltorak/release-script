@@ -33,42 +33,78 @@ const Releaser = (() => {
     })
   }
 
-  const confirmSaving = (newVersion, type) => {
-    rl.question(`Is new version: ${newVersion} ok? [Y/n] `, (answer) => {
-      if (answer.toLowerCase() === 'y' || answer === '') {
-        saveToFile()
-        execCommand('npm install')
-          .then((stdout) => {
-            console.info(`Version ${newVersion} has been released.`);
-          })
-          .then(() => {
-            rl.question('Do you want to commit and push? [Y/n]', (answer) => {
-              if (answer.toLowerCase() === 'y' || answer === '') {
-                execCommand(`git commit -am "bump to version: ${newVersion}"; git push`)
-                  .then(() => {
-                    console.log('Pushed.');
-                  })
-                  .catch(gitError => {
-                    console.warn('Error while pushing:', gitError);
-                  })
-                  .then(() => {
-                    rl.close();
-                  });
-              }
-              else {
-                rl.close();
-              }
-            })
-          })
-          .catch((error) => {
-            console.warn('Error occured:', error);
-          });
-      }
-      else {
-        console.log('Quitting, Bye.')
-        rl.close();
-      }
+  const askQuestion = (question) => {
+    return new Promise((resolve, reject) => {
+      rl.question(question, (answer) => {
+        if (answer.toLowerCase() === 'y' || answer === '') {
+          resolve(answer);
+        }
+        else {
+          reject();
+        }
+      });
     });
+  }
+
+  const confirmSaving = (newVersion, type) => {
+    askQuestion(`Is new version: ${newVersion} ok? [Y/n] `)
+      .then(() => {
+        saveToFile();
+        return execCommand('npm install');
+      })
+      .then(() => {
+        console.info(`Version ${newVersion} has been released.`);
+      })
+      .then(() => { return askQuestion('Do you want to commit and push? [Y/n] ')})
+      .then(() => {
+        return execCommand(`git commit -am "bump to version: ${newVersion}"; git push`)
+      })
+      .then(() => {
+        console.info('Pushed.')
+      })
+      .catch((error) => {
+        console.warn('An error occured:', error);
+      })
+      .then(() => {
+        console.info('Bye :)');
+        rl.close();
+      })
+
+    // rl.question(`Is new version: ${newVersion} ok? [Y/n] `, (answer) => {
+    //   if (answer.toLowerCase() === 'y' || answer === '') {
+    //     saveToFile()
+    //     execCommand('npm install')
+    //       .then((stdout) => {
+    //         console.info(`Version ${newVersion} has been released.`);
+    //       })
+    //       .then(() => {
+    //         rl.question('Do you want to commit and push? [Y/n]', (answer) => {
+    //           if (answer.toLowerCase() === 'y' || answer === '') {
+    //             execCommand(`git commit -am "bump to version: ${newVersion}"; git push`)
+    //               .then(() => {
+    //                 console.log('Pushed.');
+    //               })
+    //               .catch(gitError => {
+    //                 console.warn('Error while pushing:', gitError);
+    //               })
+    //               .then(() => {
+    //                 rl.close();
+    //               });
+    //           }
+    //           else {
+    //             rl.close();
+    //           }
+    //         })
+    //       })
+    //       .catch((error) => {
+    //         console.warn('Error occured:', error);
+    //       });
+    //   }
+    //   else {
+    //     console.log('Quitting, Bye.')
+    //     rl.close();
+    //   }
+    // });
   }
 
   const saveToFile = () => {
