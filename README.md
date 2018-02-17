@@ -24,6 +24,8 @@ If you run
 ```
   $ node index.js minor --reset-lower
 ```
+where `index.js` is script that bumps versions
+
 your new version will be `0.2.0`
 
 ### License
