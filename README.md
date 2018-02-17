@@ -1,5 +1,5 @@
 # release-script
-Simple script to bump up version
+Simple script to bump up version in `package.json`
 
 ## Script info
 
