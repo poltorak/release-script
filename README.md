@@ -25,3 +25,8 @@ If you run
   $ node index.js minor --reset-lower
 ```
 your new version will be `0.2.0`
+
+### License
+
+Copyright © 2017, [Szymon Półtorak](https://github.com/poltorak).
+Released under the [MIT License](LICENSE).
