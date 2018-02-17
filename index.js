@@ -69,42 +69,6 @@ const Releaser = (() => {
         console.info('Bye :)');
         rl.close();
       })
-
-    // rl.question(`Is new version: ${newVersion} ok? [Y/n] `, (answer) => {
-    //   if (answer.toLowerCase() === 'y' || answer === '') {
-    //     saveToFile()
-    //     execCommand('npm install')
-    //       .then((stdout) => {
-    //         console.info(`Version ${newVersion} has been released.`);
-    //       })
-    //       .then(() => {
-    //         rl.question('Do you want to commit and push? [Y/n]', (answer) => {
-    //           if (answer.toLowerCase() === 'y' || answer === '') {
-    //             execCommand(`git commit -am "bump to version: ${newVersion}"; git push`)
-    //               .then(() => {
-    //                 console.log('Pushed.');
-    //               })
-    //               .catch(gitError => {
-    //                 console.warn('Error while pushing:', gitError);
-    //               })
-    //               .then(() => {
-    //                 rl.close();
-    //               });
-    //           }
-    //           else {
-    //             rl.close();
-    //           }
-    //         })
-    //       })
-    //       .catch((error) => {
-    //         console.warn('Error occured:', error);
-    //       });
-    //   }
-    //   else {
-    //     console.log('Quitting, Bye.')
-    //     rl.close();
-    //   }
-    // });
   }
 
   const saveToFile = () => {
