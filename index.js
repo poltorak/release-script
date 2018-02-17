@@ -55,14 +55,18 @@ const Releaser = (() => {
       .then(() => {
         console.info(`Version ${newVersion} has been released.`);
       })
-      .then(() => { return askQuestion('Do you want to commit and push? [Y/n] '); })
+      .then(() => {
+        return askQuestion('Do you want to commit and push? [Y/n] ');
+      })
       .then(() => {
         return execCommand(`git commit -am "bump to version: ${newVersion}"; git push`)
       })
       .then(() => {
         console.info('Pushed.')
       })
-      .then(() => { return askQuestion(`Do you want to add tag ${newVersion} to repo? [Y/n] `); })
+      .then(() => {
+        return askQuestion(`Do you want to add tag ${newVersion} to repo? [Y/n] `);
+      })
       .then(() => {
         return execCommand(`git tag -a ${newVersion} -m "version ${newVersion}"; git push origin ${newVersion}`)
       })
@@ -110,7 +114,7 @@ const Releaser = (() => {
         case 'major':
           releaseMajor(resetLower);
           break;
-      
+
         default:
           console.warn('Only [ patch, minor, major ] releases are available.');
           break;
